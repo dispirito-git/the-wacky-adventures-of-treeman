@@ -13,6 +13,18 @@ public class Player : KinematicBody2D
 	public int gravity = 1200;
 	int maxFallSpeed = 500;
 	int jumpForce = 400;
+	
+	/*
+	public enum PlayerStage
+	{
+		Spring,
+		Autumn,
+		Winter
+	}
+	*/
+	
+	[Signal]
+	delegate void ChangeSprite(PlayerStage stage);
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -61,7 +73,16 @@ public class Player : KinematicBody2D
 		//velocity = velocity.Normalized() * this.speed;
 	}
 
-  
+	private void _on_EnergyBar_NoEnergy()
+	{
+		EmitSignal(nameof(ChangeSprite), PlayerStage.Winter);
+	}
+	
+	private void _on_EnergyBar_QuarterEnergy()
+	{
+		EmitSignal(nameof(ChangeSprite), PlayerStage.Autumn);
+	}
+	
 	public override void _PhysicsProcess(float delta)
 	{
 		Move(delta); 
@@ -69,3 +90,6 @@ public class Player : KinematicBody2D
 	}
 
 }
+
+
+

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lemer\\Documents\\GitHub\\treeman-begins\\godot\\godot.csproj": {}
+    "C:\\Users\\light\\Desktop\\treeman\\treeman-begins\\godot\\godot.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lemer\\Documents\\GitHub\\treeman-begins\\godot\\godot.csproj": {
+    "C:\\Users\\light\\Desktop\\treeman\\treeman-begins\\godot\\godot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lemer\\Documents\\GitHub\\treeman-begins\\godot\\godot.csproj",
+        "projectUniqueName": "C:\\Users\\light\\Desktop\\treeman\\treeman-begins\\godot\\godot.csproj",
         "projectName": "godot",
-        "projectPath": "C:\\Users\\lemer\\Documents\\GitHub\\treeman-begins\\godot\\godot.csproj",
-        "packagesPath": "C:\\Users\\lemer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lemer\\Documents\\GitHub\\treeman-begins\\godot\\.mono\\temp\\obj\\",
+        "projectPath": "C:\\Users\\light\\Desktop\\treeman\\treeman-begins\\godot\\godot.csproj",
+        "packagesPath": "C:\\Users\\light\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\light\\Desktop\\treeman\\treeman-begins\\godot\\.mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\lemer\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\light\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net472"
@@ -45,7 +45,7 @@
               "autoReferenced": true
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.405\\RuntimeIdentifierGraph.json"
         }
       }
     }

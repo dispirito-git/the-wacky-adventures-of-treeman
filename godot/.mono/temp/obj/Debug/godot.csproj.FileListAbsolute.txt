@@ -7,3 +7,12 @@ C:\Users\lemer\Documents\GitHub\treeman-begins\godot\.mono\temp\obj\Debug\godot.
 C:\Users\lemer\Documents\GitHub\treeman-begins\godot\.mono\temp\obj\Debug\godot.csproj.CoreCompileInputs.cache
 C:\Users\lemer\Documents\GitHub\treeman-begins\godot\.mono\temp\obj\Debug\godot.dll
 C:\Users\lemer\Documents\GitHub\treeman-begins\godot\.mono\temp\obj\Debug\godot.pdb
+C:\Users\light\Desktop\treeman\treeman-begins\godot\.mono\temp\bin\Debug\godot.dll
+C:\Users\light\Desktop\treeman\treeman-begins\godot\.mono\temp\bin\Debug\godot.pdb
+C:\Users\light\Desktop\treeman\treeman-begins\godot\.mono\temp\obj\Debug\godot.csproj.AssemblyReference.cache
+C:\Users\light\Desktop\treeman\treeman-begins\godot\.mono\temp\obj\Debug\godot.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\light\Desktop\treeman\treeman-begins\godot\.mono\temp\obj\Debug\godot.AssemblyInfoInputs.cache
+C:\Users\light\Desktop\treeman\treeman-begins\godot\.mono\temp\obj\Debug\godot.AssemblyInfo.cs
+C:\Users\light\Desktop\treeman\treeman-begins\godot\.mono\temp\obj\Debug\godot.csproj.CoreCompileInputs.cache
+C:\Users\light\Desktop\treeman\treeman-begins\godot\.mono\temp\obj\Debug\godot.dll
+C:\Users\light\Desktop\treeman\treeman-begins\godot\.mono\temp\obj\Debug\godot.pdb

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://tilemaps/mound.tres" type="TileSet" id=1]
+
+[node name="TileMap" type="TileMap"]
+scale = Vector2( 2, 2 )
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 48, 48 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 0 )
