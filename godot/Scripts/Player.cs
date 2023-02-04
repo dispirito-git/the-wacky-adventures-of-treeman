@@ -8,20 +8,15 @@ public class Player : KinematicBody2D
 	// private string b = "text";
 	
 	public Vector2 velocity;
-	public int speed = 50;
+	public int horizontalSpeed = 50;
 	public int maxSpeed = 100;
 	public int gravity = 1200;
+	public bool sprinting = false;
 	int maxFallSpeed = 500;
 	int jumpForce = 400;
+	int jumpCharge = 0;
 	
-	/*
-	public enum PlayerStage
-	{
-		Spring,
-		Autumn,
-		Winter
-	}
-	*/
+	int MAX_JUMP_CHARGE = 400;
 	
 	[Signal]
 	delegate void ChangeSprite(PlayerStage stage);
@@ -32,10 +27,35 @@ public class Player : KinematicBody2D
 		velocity = new Vector2();
 	}
 	
+	private int SprintModifier()
+	{
+		return (sprinting && !Input.IsActionPressed("crouch")) ? 3 : 1;
+	}
+	
 	public void Move(float delta) 
 	{
+		if (sprinting)
+		{
+			sprinting = Input.IsActionPressed("sprint");
+		} 
+		else
+		{
+			sprinting = Input.IsActionPressed("sprint") && IsOnFloor();
+		}
 		
-		velocity.x = Mathf.Clamp(velocity.x, -1 * maxSpeed, maxSpeed);
+		if (Input.IsActionPressed("crouch") && IsOnFloor())
+		{
+			jumpCharge = Mathf.Min(
+				MAX_JUMP_CHARGE, 
+				jumpCharge + (int) (delta * MAX_JUMP_CHARGE));
+		}
+		else
+		{
+			jumpCharge = 0;
+		}
+		
+		int speedLimit = maxSpeed * SprintModifier();
+		velocity.x = Mathf.Clamp(velocity.x, -1 * speedLimit, speedLimit);
 		
 		// Gravity:
 		velocity.y += delta * gravity;
@@ -51,22 +71,26 @@ public class Player : KinematicBody2D
 		
 		else if (Input.IsActionPressed("left"))
 		{
-			velocity.x -= speed;
+			velocity.x -= horizontalSpeed * SprintModifier();
 		}
 
 		else if (Input.IsActionPressed("right"))
 		{
-			velocity.x += speed;
+			velocity.x += horizontalSpeed * SprintModifier();
 		}	
-		
-		else 
+		else if (velocity.x > 0)
 		{
-			velocity.x = 0;
+			velocity.x = Mathf.Max(0, velocity.x - (int) (delta * maxSpeed * 4));
 		}
+		else if (velocity.x < 0)
+		{
+			velocity.x = Mathf.Min(0, velocity.x + (int) (delta * maxSpeed * 4));
+		}
+
 		
 		if (Input.IsActionPressed("jump") && IsOnFloor())
 		{
-			velocity.y = -1 * jumpForce;
+			velocity.y = -1 * (jumpForce + jumpCharge);
 		}
 		
 		
