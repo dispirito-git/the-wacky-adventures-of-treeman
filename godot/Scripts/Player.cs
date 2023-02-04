@@ -3,9 +3,6 @@ using System;
 
 public class Player : KinematicBody2D
 {
-	// Declare member variables here. Examples:
-	// private int a = 2;
-	// private string b = "text";
 	
 	public Vector2 velocity;
 	public int horizontalSpeed = 50;
@@ -20,6 +17,9 @@ public class Player : KinematicBody2D
 	
 	[Signal]
 	delegate void ChangeSprite(PlayerStage stage);
+	
+	[Signal]
+	delegate void IsSprinting(bool isSprinting);
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -43,6 +43,8 @@ public class Player : KinematicBody2D
 			sprinting = Input.IsActionPressed("sprint") && IsOnFloor();
 		}
 		
+		EmitSignal(nameof(IsSprinting), sprinting);
+		
 		if (Input.IsActionPressed("crouch") && IsOnFloor())
 		{
 			jumpCharge = Mathf.Min(
@@ -64,16 +66,11 @@ public class Player : KinematicBody2D
 			velocity.y = maxFallSpeed;
 		}
 		
-		if (Input.IsActionPressed("left") && Input.IsActionPressed("right")) 
-		{
-			velocity.x = 0;
-		}
-		
-		else if (Input.IsActionPressed("left"))
+		// Horizontal Movement:
+		if (Input.IsActionPressed("left"))
 		{
 			velocity.x -= horizontalSpeed * SprintModifier();
 		}
-
 		else if (Input.IsActionPressed("right"))
 		{
 			velocity.x += horizontalSpeed * SprintModifier();
@@ -87,14 +84,12 @@ public class Player : KinematicBody2D
 			velocity.x = Mathf.Min(0, velocity.x + (int) (delta * maxSpeed * 4));
 		}
 
-		
+		// Jumping:
 		if (Input.IsActionPressed("jump") && IsOnFloor())
 		{
 			velocity.y = -1 * (jumpForce + jumpCharge);
 		}
 		
-		
-		//velocity = velocity.Normalized() * this.speed;
 	}
 
 	private void _on_EnergyBar_NoEnergy()

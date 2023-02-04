@@ -29,5 +29,6 @@ margin_top = -277.0
 margin_right = 476.0
 margin_bottom = -247.0
 
+[connection signal="IsSprinting" from="." to="Camera2D/EnergyBar" method="_on_Player_IsSprinting"]
 [connection signal="NoEnergy" from="Camera2D/EnergyBar" to="." method="_on_EnergyBar_NoEnergy"]
 [connection signal="QuarterEnergy" from="Camera2D/EnergyBar" to="." method="_on_EnergyBar_QuarterEnergy"]

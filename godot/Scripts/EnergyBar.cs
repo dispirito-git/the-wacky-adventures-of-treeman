@@ -4,7 +4,7 @@ using System;
 public class EnergyBar : ProgressBar
 {
 	
-	public float decrementScale = 20.0f;
+	public float decrementScale = 2.0f;
 	
 	[Signal]
 	delegate void NoEnergy();
@@ -21,6 +21,18 @@ public class EnergyBar : ProgressBar
 	public override void _PhysicsProcess(float delta)
 	{
 		ChangeProgress(delta);
+	}
+	
+	private void _on_Player_IsSprinting(bool isSprinting)
+	{
+		if (isSprinting)
+		{
+			decrementScale = 6.0f;
+		}
+		else
+		{
+			decrementScale = 2.0f;
+		}
 	}
 	
 	private void ChangeProgress(float delta)
