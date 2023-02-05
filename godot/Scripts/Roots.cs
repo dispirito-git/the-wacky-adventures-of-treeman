@@ -6,6 +6,7 @@ public class Roots : AnimatedSprite
 	// Declare member variables here. Examples:
 	// private int a = 2;
 	// private string b = "text";
+	bool playerRooted = false;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -20,6 +21,7 @@ public class Roots : AnimatedSprite
 		{
 			SetFrame(0);
 		}
+		playerRooted = isRooted;
 	}
 
 	
@@ -37,6 +39,12 @@ public class Roots : AnimatedSprite
 		if (Playing && GetFrame() == 5)
 		{
 			Playing = false;
+		}
+		
+		if (!playerRooted)
+		{
+			Playing = false;
+			SetFrame(0);
 		}
 	}
 	

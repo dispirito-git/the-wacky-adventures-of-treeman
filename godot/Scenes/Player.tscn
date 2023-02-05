@@ -75,6 +75,7 @@ script = ExtResource( 6 )
 [node name="Roots" type="AnimatedSprite" parent="."]
 position = Vector2( -1, 91 )
 frames = SubResource( 7 )
+frame = 5
 script = ExtResource( 5 )
 
 [connection signal="IsRooted" from="." to="Camera2D/EnergyBar" method="_on_Player_IsRooted"]

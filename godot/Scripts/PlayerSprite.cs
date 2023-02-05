@@ -17,20 +17,35 @@ public class PlayerSprite : AnimatedSprite
 	{
 		if (stage == PlayerStage.Autumn)
 		{
-			Modulate = new Color(220, 20, 60);
+			// Modulate = new Color(220, 20, 60);
 		}
 		
 		if (stage == PlayerStage.Winter)
 		{
-			Modulate = new Color(0, 0, 0);
+			// Modulate = new Color(0, 0, 0);
 		}
 	}
+	
+	/*
+	public void AnimateRooting()
+	{
+		if (GetFrame() == 7)
+		{
+			Playing = false;
+		}
+	}
+	*/
 	
 	public override void _PhysicsProcess(float delta)
 	{
 		if (GetAnimation() == "rooting" && Playing)
 		{
 			EmitSignal(nameof(SpriteRooting), GetFrame());
+		}
+		
+		if (GetAnimation() == "rooting" && GetFrame() == 7)
+		{
+			Playing = false;
 		}
 	}
 }

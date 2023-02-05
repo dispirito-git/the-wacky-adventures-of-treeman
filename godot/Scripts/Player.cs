@@ -14,7 +14,7 @@ public class Player : KinematicBody2D
 	public bool crouching = false;
 	public Tween fadeTween;
 	public Tween secondTween;
-	int maxFallSpeed = 500;
+	int maxFallSpeed = 800;
 	int jumpForce = 400;
 	int jumpCharge = 0;
 	public string[] levels = {
@@ -63,6 +63,7 @@ public class Player : KinematicBody2D
 			sprinting = Input.IsActionPressed("sprint");
 			AnimatedSprite sprite = GetNode<AnimatedSprite>("PlayerSprite");
 			sprite.Animation = "running";
+			sprite.SetSpeedScale(1);
 			sprite.Play();
 		} 
 		else
@@ -70,6 +71,7 @@ public class Player : KinematicBody2D
 			sprinting = Input.IsActionPressed("sprint") && IsOnFloor();
 			AnimatedSprite sprite = GetNode<AnimatedSprite>("PlayerSprite");
 			sprite.Animation = "idle";
+			sprite.SetSpeedScale(1);
 			sprite.Play();
 		}
 		
@@ -82,6 +84,7 @@ public class Player : KinematicBody2D
 				jumpCharge + (int) (delta * MAX_JUMP_CHARGE));
 			AnimatedSprite sprite = GetNode<AnimatedSprite>("PlayerSprite");
 			sprite.Animation = "crouch";
+			sprite.SetSpeedScale(1);
 			sprite.Play();
 		}
 		else
@@ -131,7 +134,7 @@ public class Player : KinematicBody2D
 			velocity.y = -1 * (jumpForce + jumpCharge);
 		}
 		
-		if (velocity.x == 0 && IsOnFloor())
+		if (velocity.x == 0 && (IsOnFloor() || velocity.y >= 0))
 		{
 			EmitSignal(nameof(IsStill));
 		}
@@ -209,6 +212,7 @@ public class Player : KinematicBody2D
 					Root(delta);
 					AnimatedSprite sprite2 = GetNode<AnimatedSprite>("PlayerSprite");
 					sprite2.Animation = "rooting";
+					sprite2.SetSpeedScale(3);
 					sprite2.Play();
 					// add the roots to soil
 					return;
@@ -225,6 +229,7 @@ public class Player : KinematicBody2D
 				crouching = true;
 				AnimatedSprite sprite = GetNode<AnimatedSprite>("PlayerSprite");
 				sprite.Animation = "crouch";
+				sprite.SetSpeedScale(1);
 				sprite.Play();
 			}
 			
