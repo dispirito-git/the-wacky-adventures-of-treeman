@@ -81,7 +81,7 @@ public class Player : KinematicBody2D
 		{
 			jumpCharge = Mathf.Min(
 				MAX_JUMP_CHARGE, 
-				jumpCharge + (int) (delta * MAX_JUMP_CHARGE));
+				jumpCharge + (int) (delta * MAX_JUMP_CHARGE * 2));
 			AnimatedSprite sprite = GetNode<AnimatedSprite>("PlayerSprite");
 			sprite.Animation = "crouch";
 			sprite.SetSpeedScale(1);
