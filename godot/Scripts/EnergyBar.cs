@@ -5,6 +5,7 @@ public class EnergyBar : ProgressBar
 {
 	
 	public float decrementScale = 6.0f;
+	public float incrementScale = 3.0f;
 	bool decrement = false;
 	
 	[Signal]
@@ -58,7 +59,7 @@ public class EnergyBar : ProgressBar
 	
 	private void _on_Player_IsRooted(float delta)
 	{
-		Value += delta;
+		Value += delta * incrementScale;
 	}
 	
 	private void _on_Player_IsStill()
