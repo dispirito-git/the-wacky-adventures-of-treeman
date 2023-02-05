@@ -16,6 +16,10 @@ public class Player : KinematicBody2D
 	int maxFallSpeed = 500;
 	int jumpForce = 400;
 	int jumpCharge = 0;
+	public string[] levels = {
+		"Scenes/World.tscn",
+		"Scenes/Level2.tscn"
+	};
 	
 	
 	int MAX_JUMP_CHARGE = 400;
@@ -32,6 +36,12 @@ public class Player : KinematicBody2D
 	
 	[Signal]
 	delegate void IsRooted(float delta);
+
+	private string GetLevel()
+	{
+		return levels[GameState.Instance.CurrentLevel];
+	}
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -87,6 +97,7 @@ public class Player : KinematicBody2D
 		// Horizontal Movement:
 		if (Input.IsActionPressed("left"))
 		{
+			GameState.Instance.CurrentLevel = 1;
 			velocity.x -= horizontalSpeed * SprintModifier();
 			AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
 			sprite.Scale = new Vector2(-1.719f, 1.859f);
@@ -134,7 +145,7 @@ public class Player : KinematicBody2D
 			secondTween.InterpolateProperty(currentScene, "modulate", new Color(0, 0, 0, 1), new Color(1, 1, 1, 1), 1.0f, Tween.TransitionType.Linear, Tween.EaseType.In);
 			currentScene.AddChild(secondTween);
 			secondTween.Start();
-			GetTree().ChangeScene("Scenes/World.tscn");
+			GetTree().ChangeScene(GetLevel());
 			
 	}
 	

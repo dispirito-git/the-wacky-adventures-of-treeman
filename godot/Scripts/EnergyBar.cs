@@ -4,7 +4,7 @@ using System;
 public class EnergyBar : ProgressBar
 {
 	
-	public float decrementScale = 2.0f;
+	public float decrementScale = 6.0f;
 	bool decrement = false;
 	
 	[Signal]
@@ -33,11 +33,11 @@ public class EnergyBar : ProgressBar
 		
 		if (isSprinting)
 		{
-			decrementScale = 6.0f;
+			decrementScale = 18.0f;
 		}
 		else
 		{
-			decrementScale = 2.0f;
+			decrementScale = 6.0f;
 		}
 	}
 	

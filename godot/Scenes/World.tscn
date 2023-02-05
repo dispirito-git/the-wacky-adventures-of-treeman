@@ -25,3 +25,4 @@ scale = Vector2( 1, 1 )
 [node name="Sky" parent="." instance=ExtResource( 5 )]
 position = Vector2( -725, -489 )
 scale = Vector2( 6, 6 )
+tile_data = PoolIntArray( -262182, 0, 0, -262144, 1, 0 )
