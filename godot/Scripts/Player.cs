@@ -10,6 +10,7 @@ public class Player : KinematicBody2D
 	public int gravity = 1200;
 	public bool sprinting = false;
 	public bool rooted = false;
+	public Tween fadeTween;
 	int maxFallSpeed = 500;
 	int jumpForce = 400;
 	int jumpCharge = 0;
@@ -46,10 +47,16 @@ public class Player : KinematicBody2D
 		if (sprinting)
 		{
 			sprinting = Input.IsActionPressed("sprint");
+			AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+			sprite.Animation = "running";
+			sprite.Play();
 		} 
 		else
 		{
 			sprinting = Input.IsActionPressed("sprint") && IsOnFloor();
+			AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+			sprite.Animation = "idle";
+			sprite.Play();
 		}
 		
 		EmitSignal(nameof(IsSprinting), sprinting);
@@ -79,10 +86,15 @@ public class Player : KinematicBody2D
 		if (Input.IsActionPressed("left"))
 		{
 			velocity.x -= horizontalSpeed * SprintModifier();
+			AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+			sprite.Scale = new Vector2(-1.719f, 1.859f);
+			
 		}
 		else if (Input.IsActionPressed("right"))
 		{
 			velocity.x += horizontalSpeed * SprintModifier();
+			AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+			sprite.Scale = new Vector2(1.719f, 1.859f);
 		}	
 		else if (velocity.x > 0)
 		{
@@ -103,6 +115,20 @@ public class Player : KinematicBody2D
 		{
 			EmitSignal(nameof(IsStill));
 		}
+		
+		// Check if the R key was pressed
+			if(Input.IsActionPressed("reset")){
+				// Get the current scene
+			var currentScene = GetTree().CurrentScene;
+
+			// Create a Tween node to control the fade
+			fadeTween = new Tween();
+			fadeTween.InterpolateProperty(currentScene, "modulate", new Color(1, 1, 1, 1), new Color(0, 0, 0, 1), 1.0f, Tween.TransitionType.Linear, Tween.EaseType.In);
+			currentScene.AddChild(fadeTween);
+			fadeTween.Start();
+			fadeTween.Connect("tween_completed", this, nameof(_on_FadeOut_tween_completed));
+		}	
+			
 		
 	}
 
@@ -165,7 +191,22 @@ public class Player : KinematicBody2D
 		}
 		CheckRooting(delta);
 	}
+	
+	
+	private void _on_FadeOut_tween_completed(Node target, string property, object value)
+{
+	GD.Print("test");
+	GetTree().ChangeScene(GetTree().CurrentScene.GetPath());
+	Node currentScene = GetTree().GetCurrentScene();
 
+	Tween fadeTween = new Tween();
+	fadeTween.InterpolateProperty(currentScene, "modulate", new Color(0, 0, 0, 1), new Color(1, 1, 1, 1), 1.0f, Tween.TransitionType.Linear, Tween.EaseType.In);
+	currentScene.AddChild(fadeTween);
+	fadeTween.Start();
 }
+	
+	
+	}
+
 
 
