@@ -5,6 +5,7 @@ public class EnergyBar : ProgressBar
 {
 	
 	public float decrementScale = 2.0f;
+	bool decrement = false;
 	
 	[Signal]
 	delegate void NoEnergy();
@@ -20,11 +21,16 @@ public class EnergyBar : ProgressBar
 	
 	public override void _PhysicsProcess(float delta)
 	{
-		ChangeProgress(delta);
+		if (decrement)
+		{
+			ChangeProgress(delta);
+		}
 	}
 	
 	private void _on_Player_IsSprinting(bool isSprinting)
 	{
+		decrement = true;
+		
 		if (isSprinting)
 		{
 			decrementScale = 6.0f;
@@ -53,6 +59,11 @@ public class EnergyBar : ProgressBar
 	private void _on_Player_IsRooted(float delta)
 	{
 		Value += delta;
+	}
+	
+	private void _on_Player_IsStill()
+	{
+		decrement = false;
 	}
 
 }

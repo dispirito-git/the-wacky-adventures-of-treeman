@@ -25,6 +25,9 @@ public class Player : KinematicBody2D
 	delegate void IsSprinting(bool isSprinting);
 	
 	[Signal]
+	delegate void IsStill();
+	
+	[Signal]
 	delegate void IsRooted(float delta);
 
 	// Called when the node enters the scene tree for the first time.
@@ -96,6 +99,11 @@ public class Player : KinematicBody2D
 			velocity.y = -1 * (jumpForce + jumpCharge);
 		}
 		
+		if (velocity.x == 0 && IsOnFloor())
+		{
+			EmitSignal(nameof(IsStill));
+		}
+		
 	}
 
 	private void _on_EnergyBar_NoEnergy()
@@ -108,22 +116,36 @@ public class Player : KinematicBody2D
 		EmitSignal(nameof(ChangeSprite), PlayerStage.Autumn);
 	}
 	
+	private bool Crouched()
+	{
+		return Input.IsActionPressed("crouch");
+	}
+	
 	private void CheckRooting(float delta)
 	{
-		if (Input.IsActionPressed("crouch"))
+		if (!rooted && Crouched())
 		{
 			int slideCount = GetSlideCount();
 			for (int i = 0; i < slideCount; i++) {
 				KinematicCollision2D collision = GetSlideCollision(i);
 				// Change this if statement???
-				if (collision.Collider.ToString().Equals("[TileMap:1360]"))
+				TileMap map = collision.Collider as TileMap;
+				TileSet tileset = map.TileSet as TileSet;
+				GD.Print(tileset.TileGetName(i));
+				if (tileset.TileGetName(i).Equals("mound.png 0"))
 				{
+					rooted = true;
 					Root(delta);
+					// add the roots to soil
 					return;
 				}
 			}
 		}
-		if (rooted)
+		else if (Crouched())
+		{
+			Root(delta);
+		}
+		else if (rooted)
 		{
 			rooted = false;
 			// Change the soil so you cannot root anymore?
@@ -132,7 +154,6 @@ public class Player : KinematicBody2D
 	
 	private void Root(float delta)
 	{
-		rooted = true;
 		EmitSignal(nameof(IsRooted), delta * ROOT_PER_SEC);
 	}
 	
