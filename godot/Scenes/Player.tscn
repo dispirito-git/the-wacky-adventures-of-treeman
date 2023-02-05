@@ -69,7 +69,7 @@ position = Vector2( 0.500001, -0.499998 )
 scale = Vector2( 1.71875, 1.85938 )
 frames = ExtResource( 2 )
 animation = "jump"
-frame = 4
+frame = 2
 playing = true
 script = ExtResource( 6 )
 

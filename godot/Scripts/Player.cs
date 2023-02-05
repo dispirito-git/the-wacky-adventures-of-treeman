@@ -20,7 +20,8 @@ public class Player : KinematicBody2D
 	public string[] levels = {
 		"Scenes/Level1.tscn",
 		"Scenes/Level2.tscn",
-		"Scenes/World.tscn"
+		"Scenes/World.tscn",
+		"Scenes/Win.tscn"
 	};
 	
 	
