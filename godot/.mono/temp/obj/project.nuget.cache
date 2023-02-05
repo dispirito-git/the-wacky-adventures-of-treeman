@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "epg2pB8JFqoHA1MbvWyT8S2TQsX2leeytwTj9b9sxZiZP6WU2PYTVIwvpz3gh17mbQUj7/8s0GdkLPz7yIRGzQ==",
+  "dgSpecHash": "7TybSwAA/mke4+QwkQyYHpZP1taz7TrbmXmo1N8/XSOlLf3mELiW6JfBm2zAzWKgcMP/H0F9bTJlFHb3kbs6+g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ottob\\Downloads\\treeman-begins\\godot\\godot.csproj",
+  "projectFilePath": "C:\\Users\\lemer\\Documents\\Github\\treeman-begins\\godot\\godot.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\ottob\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.2\\microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
-    "C:\\Users\\ottob\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.2\\microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512"
+    "C:\\Users\\lemer\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.2\\microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
+    "C:\\Users\\lemer\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.2\\microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512"
   ],
   "logs": []
 }
