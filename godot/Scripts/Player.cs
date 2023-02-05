@@ -97,7 +97,6 @@ public class Player : KinematicBody2D
 		// Horizontal Movement:
 		if (Input.IsActionPressed("left"))
 		{
-			GameState.Instance.CurrentLevel = 1;
 			velocity.x -= horizontalSpeed * SprintModifier();
 			AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
 			sprite.Scale = new Vector2(-1.719f, 1.859f);
