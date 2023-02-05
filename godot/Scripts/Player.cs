@@ -18,8 +18,9 @@ public class Player : KinematicBody2D
 	int jumpForce = 400;
 	int jumpCharge = 0;
 	public string[] levels = {
-		"Scenes/World.tscn",
-		"Scenes/Level2.tscn"
+		"Scenes/Level1.tscn",
+		"Scenes/Level2.tscn",
+		"Scenes/World.tscn"
 	};
 	
 	
@@ -36,7 +37,7 @@ public class Player : KinematicBody2D
 	delegate void IsStill();
 	
 	[Signal]
-	delegate void IsRooted(float delta);
+	delegate void IsRooted(bool isRooted, float delta);
 
 	private string GetLevel()
 	{
@@ -60,14 +61,14 @@ public class Player : KinematicBody2D
 		if (sprinting)
 		{
 			sprinting = Input.IsActionPressed("sprint");
-			AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+			AnimatedSprite sprite = GetNode<AnimatedSprite>("PlayerSprite");
 			sprite.Animation = "running";
 			sprite.Play();
 		} 
 		else
 		{
 			sprinting = Input.IsActionPressed("sprint") && IsOnFloor();
-			AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+			AnimatedSprite sprite = GetNode<AnimatedSprite>("PlayerSprite");
 			sprite.Animation = "idle";
 			sprite.Play();
 		}
@@ -79,7 +80,7 @@ public class Player : KinematicBody2D
 			jumpCharge = Mathf.Min(
 				MAX_JUMP_CHARGE, 
 				jumpCharge + (int) (delta * MAX_JUMP_CHARGE));
-			AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+			AnimatedSprite sprite = GetNode<AnimatedSprite>("PlayerSprite");
 			sprite.Animation = "crouch";
 			sprite.Play();
 		}
@@ -105,14 +106,14 @@ public class Player : KinematicBody2D
 		if (Input.IsActionPressed("left"))
 		{
 			velocity.x -= horizontalSpeed * SprintModifier();
-			AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+			AnimatedSprite sprite = GetNode<AnimatedSprite>("PlayerSprite");
 			sprite.Scale = new Vector2(-1.719f, 1.859f);
 			
 		}
 		else if (Input.IsActionPressed("right"))
 		{
 			velocity.x += horizontalSpeed * SprintModifier();
-			AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+			AnimatedSprite sprite = GetNode<AnimatedSprite>("PlayerSprite");
 			sprite.Scale = new Vector2(1.719f, 1.859f);
 		}	
 		else if (velocity.x > 0)
@@ -206,7 +207,7 @@ public class Player : KinematicBody2D
 				{
 					rooted = true;
 					Root(delta);
-					AnimatedSprite sprite2 = GetNode<AnimatedSprite>("AnimatedSprite");
+					AnimatedSprite sprite2 = GetNode<AnimatedSprite>("PlayerSprite");
 					sprite2.Animation = "rooting";
 					sprite2.Play();
 					// add the roots to soil
@@ -222,7 +223,7 @@ public class Player : KinematicBody2D
 			{
 				GD.Print("heyo");
 				crouching = true;
-				AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+				AnimatedSprite sprite = GetNode<AnimatedSprite>("PlayerSprite");
 				sprite.Animation = "crouch";
 				sprite.Play();
 			}
@@ -247,7 +248,7 @@ public class Player : KinematicBody2D
 	
 	private void Root(float delta)
 	{
-		EmitSignal(nameof(IsRooted), delta * ROOT_PER_SEC);
+		EmitSignal(nameof(IsRooted), true, delta * ROOT_PER_SEC);
 	}
 	
 	public override void _PhysicsProcess(float delta)
@@ -256,6 +257,7 @@ public class Player : KinematicBody2D
 		{
 			Move(delta); 
 			MoveAndSlide(velocity, new Vector2(0,-1));
+			EmitSignal(nameof(IsRooted), false, delta * ROOT_PER_SEC);
 		}
 		CheckRooting(delta);
 	}

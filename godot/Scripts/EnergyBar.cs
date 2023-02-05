@@ -57,9 +57,12 @@ public class EnergyBar : ProgressBar
 		}
 	}
 	
-	private void _on_Player_IsRooted(float delta)
+	private void _on_Player_IsRooted(bool isRooted, float delta)
 	{
-		Value += delta * incrementScale;
+		if (isRooted)
+		{
+			Value += delta * incrementScale;
+		}
 	}
 	
 	private void _on_Player_IsStill()

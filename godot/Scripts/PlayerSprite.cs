@@ -1,11 +1,11 @@
 using Godot;
 using System;
 
-public class PlayerSprite : Sprite
+public class PlayerSprite : AnimatedSprite
 {
-	// Declare member variables here. Examples:
-	// private int a = 2;
-	// private string b = "text";
+
+	[Signal]
+	delegate void SpriteRooting(int frame);
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -28,6 +28,9 @@ public class PlayerSprite : Sprite
 	
 	public override void _PhysicsProcess(float delta)
 	{
-		
+		if (GetAnimation() == "rooting" && Playing)
+		{
+			EmitSignal(nameof(SpriteRooting), GetFrame());
+		}
 	}
 }
