@@ -415,19 +415,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ottob\\.nuget\\packages\\": {}
+    "C:\\Users\\light\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ottob\\Downloads\\treeman-begins\\godot\\godot.csproj",
+      "projectUniqueName": "C:\\Users\\light\\Desktop\\treeman\\treeman-begins\\godot\\godot.csproj",
       "projectName": "godot",
-      "projectPath": "C:\\Users\\ottob\\Downloads\\treeman-begins\\godot\\godot.csproj",
-      "packagesPath": "C:\\Users\\ottob\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ottob\\Downloads\\treeman-begins\\godot\\.mono\\temp\\obj\\",
+      "projectPath": "C:\\Users\\light\\Desktop\\treeman\\treeman-begins\\godot\\godot.csproj",
+      "packagesPath": "C:\\Users\\light\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\light\\Desktop\\treeman\\treeman-begins\\godot\\.mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ottob\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\light\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net472"
@@ -458,7 +458,7 @@
             "autoReferenced": true
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.405\\RuntimeIdentifierGraph.json"
       }
     }
   }
