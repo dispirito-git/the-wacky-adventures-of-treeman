@@ -142,6 +142,14 @@ public class Player : KinematicBody2D
 		if(Input.IsActionPressed("reset")){
 		TheR();
 		}
+		
+		if (velocity.y < 0 && !IsOnFloor())
+		{
+			AnimatedSprite sprite = GetNode<AnimatedSprite>("PlayerSprite");
+			sprite.SetSpeedScale(1);
+			sprite.Animation = "jump";
+			sprite.SetFrame(2);
+		}
 			
 		
 	}
