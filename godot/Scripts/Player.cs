@@ -25,6 +25,9 @@ public class Player : KinematicBody2D
 	delegate void IsSprinting(bool isSprinting);
 	
 	[Signal]
+	delegate void IsStill();
+	
+	[Signal]
 	delegate void IsRooted(float delta);
 
 	// Called when the node enters the scene tree for the first time.
@@ -94,6 +97,11 @@ public class Player : KinematicBody2D
 		if (Input.IsActionPressed("jump") && IsOnFloor())
 		{
 			velocity.y = -1 * (jumpForce + jumpCharge);
+		}
+		
+		if (velocity.x == 0 && IsOnFloor())
+		{
+			EmitSignal(nameof(IsStill));
 		}
 		
 	}
