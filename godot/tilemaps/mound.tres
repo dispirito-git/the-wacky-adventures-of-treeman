@@ -1,9 +1,24 @@
-[gd_resource type="TileSet" load_steps=3 format=2]
+[gd_resource type="TileSet" load_steps=4 format=2]
 
 [ext_resource path="res://Assets/mound.png" type="Texture" id=1]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 48, 0, 48, 48, 0, 48 )
+
+[sub_resource type="CSharpScript" id=2]
+script/source = "using Godot;
+using System;
+
+public class MoundTileSet : TileSet 
+{
+	
+	
+	public override void _PhysicsProcess(float delta)
+	{
+		
+	}
+}
+"
 
 [resource]
 0/name = "mound.png 0"
@@ -50,3 +65,4 @@ points = PoolVector2Array( 0, 0, 48, 0, 48, 48, 0, 48 )
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 1/z_index = 0
+script = SubResource( 2 )
