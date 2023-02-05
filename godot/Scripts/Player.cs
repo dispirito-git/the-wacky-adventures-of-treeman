@@ -131,7 +131,6 @@ public class Player : KinematicBody2D
 				// Change this if statement???
 				TileMap map = collision.Collider as TileMap;
 				TileSet tileset = map.TileSet as TileSet;
-				GD.Print(tileset.TileGetName(i));
 				if (tileset.TileGetName(i).Equals("mound.png 0"))
 				{
 					rooted = true;
