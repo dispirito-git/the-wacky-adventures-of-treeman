@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections;
 
 public class Player : KinematicBody2D
 {
@@ -11,6 +12,7 @@ public class Player : KinematicBody2D
 	public bool sprinting = false;
 	public bool rooted = false;
 	public Tween fadeTween;
+	public Tween secondTween;
 	int maxFallSpeed = 500;
 	int jumpForce = 400;
 	int jumpCharge = 0;
@@ -119,18 +121,37 @@ public class Player : KinematicBody2D
 		// Check if the R key was pressed
 			if(Input.IsActionPressed("reset")){
 				// Get the current scene
+			
+			WaitForAnimation();
+			secondTween = new Tween();
 			var currentScene = GetTree().CurrentScene;
+			secondTween.InterpolateProperty(currentScene, "modulate", new Color(0, 0, 0, 1), new Color(1, 1, 1, 1), 1.0f, Tween.TransitionType.Linear, Tween.EaseType.In);
+			currentScene.AddChild(secondTween);
+			secondTween.Start();
+			GetTree().ChangeScene("Scenes/World.tscn");
+		}	
+			
+		
+	}
+	
+	public IEnumerator WaitForAnimation()
+{
+	
+		var currentScene = GetTree().CurrentScene;
 
 			// Create a Tween node to control the fade
 			fadeTween = new Tween();
 			fadeTween.InterpolateProperty(currentScene, "modulate", new Color(1, 1, 1, 1), new Color(0, 0, 0, 1), 1.0f, Tween.TransitionType.Linear, Tween.EaseType.In);
 			currentScene.AddChild(fadeTween);
+			//fadeTween.Connect("tween_completed", this, "_on_FadeOut_tween_completed");
 			fadeTween.Start();
-			fadeTween.Connect("tween_completed", this, nameof(_on_FadeOut_tween_completed));
-		}	
-			
-		
+	// Wait for the animation to finish
+	while (fadeTween.IsActive())
+	{
+		yield return null;
 	}
+
+}
 
 	private void _on_EnergyBar_NoEnergy()
 	{
@@ -191,20 +212,6 @@ public class Player : KinematicBody2D
 		}
 		CheckRooting(delta);
 	}
-	
-	
-	private void _on_FadeOut_tween_completed(Node target, string property, object value)
-{
-	GD.Print("test");
-	GetTree().ChangeScene(GetTree().CurrentScene.GetPath());
-	Node currentScene = GetTree().GetCurrentScene();
-
-	Tween fadeTween = new Tween();
-	fadeTween.InterpolateProperty(currentScene, "modulate", new Color(0, 0, 0, 1), new Color(1, 1, 1, 1), 1.0f, Tween.TransitionType.Linear, Tween.EaseType.In);
-	currentScene.AddChild(fadeTween);
-	fadeTween.Start();
-}
-	
 	
 	}
 
