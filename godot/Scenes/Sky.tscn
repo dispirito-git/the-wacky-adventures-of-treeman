@@ -4,8 +4,10 @@
 
 [node name="Sky" type="TileMap"]
 position = Vector2( 8, 8 )
+scale = Vector2( 8, 8 )
 z_index = -20
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
+cell_custom_transform = Transform2D( 72, 0, 0, 72, 0, 0 )
 format = 1
 tile_data = PoolIntArray( -262144, 1, 0 )

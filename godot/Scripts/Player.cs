@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections;
 
 public class Player : KinematicBody2D
 {
@@ -11,9 +12,14 @@ public class Player : KinematicBody2D
 	public bool sprinting = false;
 	public bool rooted = false;
 	public Tween fadeTween;
+	public Tween secondTween;
 	int maxFallSpeed = 500;
 	int jumpForce = 400;
 	int jumpCharge = 0;
+	public string[] levels = {
+		"Scenes/World.tscn",
+		"Scenes/Level2.tscn"
+	};
 	
 	
 	int MAX_JUMP_CHARGE = 400;
@@ -30,6 +36,12 @@ public class Player : KinematicBody2D
 	
 	[Signal]
 	delegate void IsRooted(float delta);
+
+	private string GetLevel()
+	{
+		return levels[GameState.Instance.CurrentLevel];
+	}
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -85,6 +97,7 @@ public class Player : KinematicBody2D
 		// Horizontal Movement:
 		if (Input.IsActionPressed("left"))
 		{
+			GameState.Instance.CurrentLevel = 1;
 			velocity.x -= horizontalSpeed * SprintModifier();
 			AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
 			sprite.Scale = new Vector2(-1.719f, 1.859f);
@@ -115,26 +128,51 @@ public class Player : KinematicBody2D
 		{
 			EmitSignal(nameof(IsStill));
 		}
+		if(Input.IsActionPressed("reset")){
+		TheR();
+		}
+			
 		
-		// Check if the R key was pressed
-			if(Input.IsActionPressed("reset")){
+	}
+	
+	public void TheR(){
+			
 				// Get the current scene
+			
+			WaitForAnimation();
+			secondTween = new Tween();
 			var currentScene = GetTree().CurrentScene;
+			secondTween.InterpolateProperty(currentScene, "modulate", new Color(0, 0, 0, 1), new Color(1, 1, 1, 1), 1.0f, Tween.TransitionType.Linear, Tween.EaseType.In);
+			currentScene.AddChild(secondTween);
+			secondTween.Start();
+			GetTree().ChangeScene(GetLevel());
+			
+	}
+	
+	public IEnumerator WaitForAnimation()
+{
+	
+		var currentScene = GetTree().CurrentScene;
 
 			// Create a Tween node to control the fade
 			fadeTween = new Tween();
 			fadeTween.InterpolateProperty(currentScene, "modulate", new Color(1, 1, 1, 1), new Color(0, 0, 0, 1), 1.0f, Tween.TransitionType.Linear, Tween.EaseType.In);
 			currentScene.AddChild(fadeTween);
+			//fadeTween.Connect("tween_completed", this, "_on_FadeOut_tween_completed");
 			fadeTween.Start();
-			fadeTween.Connect("tween_completed", this, nameof(_on_FadeOut_tween_completed));
-		}	
-			
-		
+	// Wait for the animation to finish
+	while (fadeTween.IsActive())
+	{
+		yield return null;
 	}
+
+}
 
 	private void _on_EnergyBar_NoEnergy()
 	{
 		EmitSignal(nameof(ChangeSprite), PlayerStage.Winter);
+		TheR();
+		
 	}
 	
 	private void _on_EnergyBar_QuarterEnergy()
@@ -191,20 +229,6 @@ public class Player : KinematicBody2D
 		}
 		CheckRooting(delta);
 	}
-	
-	
-	private void _on_FadeOut_tween_completed(Node target, string property, object value)
-{
-	GD.Print("test");
-	GetTree().ChangeScene(GetTree().CurrentScene.GetPath());
-	Node currentScene = GetTree().GetCurrentScene();
-
-	Tween fadeTween = new Tween();
-	fadeTween.InterpolateProperty(currentScene, "modulate", new Color(0, 0, 0, 1), new Color(1, 1, 1, 1), 1.0f, Tween.TransitionType.Linear, Tween.EaseType.In);
-	currentScene.AddChild(fadeTween);
-	fadeTween.Start();
-}
-	
 	
 	}
 
