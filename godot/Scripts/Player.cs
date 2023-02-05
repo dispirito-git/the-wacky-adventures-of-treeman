@@ -9,17 +9,23 @@ public class Player : KinematicBody2D
 	public int maxSpeed = 100;
 	public int gravity = 1200;
 	public bool sprinting = false;
+	public bool rooted = false;
 	int maxFallSpeed = 500;
 	int jumpForce = 400;
 	int jumpCharge = 0;
 	
+	
 	int MAX_JUMP_CHARGE = 400;
+	float ROOT_PER_SEC = 25.0f;
 	
 	[Signal]
 	delegate void ChangeSprite(PlayerStage stage);
 	
 	[Signal]
 	delegate void IsSprinting(bool isSprinting);
+	
+	[Signal]
+	delegate void IsRooted(float delta);
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -102,10 +108,42 @@ public class Player : KinematicBody2D
 		EmitSignal(nameof(ChangeSprite), PlayerStage.Autumn);
 	}
 	
+	private void CheckRooting(float delta)
+	{
+		if (Input.IsActionPressed("crouch"))
+		{
+			int slideCount = GetSlideCount();
+			for (int i = 0; i < slideCount; i++) {
+				KinematicCollision2D collision = GetSlideCollision(i);
+				// Change this if statement???
+				if (collision.Collider.ToString().Equals("[TileMap:1360]"))
+				{
+					Root(delta);
+					return;
+				}
+			}
+		}
+		if (rooted)
+		{
+			rooted = false;
+			// Change the soil so you cannot root anymore?
+		}
+	}
+	
+	private void Root(float delta)
+	{
+		rooted = true;
+		EmitSignal(nameof(IsRooted), delta * ROOT_PER_SEC);
+	}
+	
 	public override void _PhysicsProcess(float delta)
 	{
-		Move(delta); 
-		MoveAndSlide(velocity, new Vector2(0,-1));
+		if (!rooted) 
+		{
+			Move(delta); 
+			MoveAndSlide(velocity, new Vector2(0,-1));
+		}
+		CheckRooting(delta);
 	}
 
 }

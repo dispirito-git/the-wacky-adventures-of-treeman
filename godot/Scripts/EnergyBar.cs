@@ -49,5 +49,10 @@ public class EnergyBar : ProgressBar
 			EmitSignal(nameof(QuarterEnergy));
 		}
 	}
+	
+	private void _on_Player_IsRooted(float delta)
+	{
+		Value += delta;
+	}
 
 }

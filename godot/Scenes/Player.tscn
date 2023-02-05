@@ -30,6 +30,7 @@ frames = ExtResource( 2 )
 animation = "idle"
 playing = true
 
+[connection signal="IsRooted" from="." to="Camera2D/EnergyBar" method="_on_Player_IsRooted"]
 [connection signal="IsSprinting" from="." to="Camera2D/EnergyBar" method="_on_Player_IsSprinting"]
 [connection signal="NoEnergy" from="Camera2D/EnergyBar" to="." method="_on_EnergyBar_NoEnergy"]
 [connection signal="QuarterEnergy" from="Camera2D/EnergyBar" to="." method="_on_EnergyBar_QuarterEnergy"]
