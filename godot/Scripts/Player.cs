@@ -117,9 +117,15 @@ public class Player : KinematicBody2D
 		{
 			EmitSignal(nameof(IsStill));
 		}
+		if(Input.IsActionPressed("reset")){
+		TheR();
+		}
+			
 		
-		// Check if the R key was pressed
-			if(Input.IsActionPressed("reset")){
+	}
+	
+	public void TheR(){
+			
 				// Get the current scene
 			
 			WaitForAnimation();
@@ -129,9 +135,7 @@ public class Player : KinematicBody2D
 			currentScene.AddChild(secondTween);
 			secondTween.Start();
 			GetTree().ChangeScene("Scenes/World.tscn");
-		}	
 			
-		
 	}
 	
 	public IEnumerator WaitForAnimation()
@@ -156,6 +160,8 @@ public class Player : KinematicBody2D
 	private void _on_EnergyBar_NoEnergy()
 	{
 		EmitSignal(nameof(ChangeSprite), PlayerStage.Winter);
+		TheR();
+		
 	}
 	
 	private void _on_EnergyBar_QuarterEnergy()
