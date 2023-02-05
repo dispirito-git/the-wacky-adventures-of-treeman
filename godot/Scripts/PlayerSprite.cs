@@ -47,5 +47,6 @@ public class PlayerSprite : AnimatedSprite
 		{
 			Playing = false;
 		}
+		
 	}
 }

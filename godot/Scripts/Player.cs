@@ -85,7 +85,8 @@ public class Player : KinematicBody2D
 			AnimatedSprite sprite = GetNode<AnimatedSprite>("PlayerSprite");
 			sprite.Animation = "crouch";
 			sprite.SetSpeedScale(1);
-			sprite.Play();
+			//sprite.Play();
+			sprite.SetFrame(2);
 		}
 		else
 		{
