@@ -11,6 +11,7 @@ public class Player : KinematicBody2D
 	public int gravity = 1200;
 	public bool sprinting = false;
 	public bool rooted = false;
+	public bool crouching = false;
 	public Tween fadeTween;
 	public Tween secondTween;
 	int maxFallSpeed = 500;
@@ -78,10 +79,16 @@ public class Player : KinematicBody2D
 			jumpCharge = Mathf.Min(
 				MAX_JUMP_CHARGE, 
 				jumpCharge + (int) (delta * MAX_JUMP_CHARGE));
+			AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+			sprite.Animation = "crouch";
+			sprite.Play();
 		}
 		else
 		{
 			jumpCharge = 0;
+			//AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+			//sprite.Animation = "idle";
+			//sprite.Play();
 		}
 		
 		int speedLimit = maxSpeed * SprintModifier();
@@ -123,7 +130,7 @@ public class Player : KinematicBody2D
 			velocity.y = -1 * (jumpForce + jumpCharge);
 		}
 		
-		if (velocity.x == 0 && (IsOnFloor() || velocity.y > 0))
+		if (velocity.x == 0 && IsOnFloor())
 		{
 			EmitSignal(nameof(IsStill));
 		}
@@ -192,25 +199,49 @@ public class Player : KinematicBody2D
 			for (int i = 0; i < slideCount; i++) {
 				KinematicCollision2D collision = GetSlideCollision(i);
 				// Change this if statement???
+				
 				TileMap map = collision.Collider as TileMap;
 				TileSet tileset = map.TileSet as TileSet;
 				if (tileset.TileGetName(i).Equals("mound.png 0"))
 				{
 					rooted = true;
 					Root(delta);
+					AnimatedSprite sprite2 = GetNode<AnimatedSprite>("AnimatedSprite");
+					sprite2.Animation = "rooting";
+					sprite2.Play();
 					// add the roots to soil
 					return;
 				}
+				if(collision.Collider.ToString().Equals("[StaticBody2D:1412]")){
+					GameState.Instance.CurrentLevel +=1;
+					GetTree().ChangeScene(GetLevel());
+				}
+				
 			}
+			if (!crouching)
+			{
+				GD.Print("heyo");
+				crouching = true;
+				AnimatedSprite sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+				sprite.Animation = "crouch";
+				sprite.Play();
+			}
+			
 		}
 		else if (Crouched())
 		{
 			Root(delta);
+			
 		}
 		else if (rooted)
 		{
 			rooted = false;
 			// Change the soil so you cannot root anymore?
+		}
+		else if (crouching)
+		{
+			crouching = false;
+			// end crouching
 		}
 	}
 	
@@ -230,5 +261,6 @@ public class Player : KinematicBody2D
 	}
 	
 	}
+
 
 
